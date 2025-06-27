@@ -1,31 +1,32 @@
-name: Build & Deploy Spring Boot Microservices
+name: Render Deployment
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+    paths:
+      - 'api-gateway-service/**'
+      - 'discovery-server/**'
 
 jobs:
-  build-and-deploy:
+  deploy-gateway:
+    name: Deploy API Gateway to Render
     runs-on: ubuntu-latest
-
+    if: github.event.head_commit.message != 'skip ci'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Trigger Render Deploy for Gateway
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK_GATEWAY"
+        env:
+          RENDER_DEPLOY_HOOK_GATEWAY: ${{ secrets.RENDER_DEPLOY_HOOK_GATEWAY }}
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          cache: 'maven'
-
-      - name: Build Discovery Server
-        working-directory: discovery-server
-        run: mvn clean package -DskipTests
-
-      - name: Build API Gateway
-        working-directory: api-gateway-service
-        run: mvn clean package -DskipTests
-
-      # Optional: Deploy to Render via Webhook or API if needed
-      # You can use curl to call Render deploy hook (see below)
+  deploy-discovery:
+    name: Deploy Discovery Server to Render
+    runs-on: ubuntu-latest
+    if: github.event.head_commit.message != 'skip ci'
+    steps:
+      - name: Trigger Render Deploy for Discovery
+        run: |
+          curl -X POST "$RENDER_DEPLOY_HOOK_DISCOVRY"
+        env:
+          RENDER_DEPLOY_HOOK_DISCOVRY: ${{ secrets.RENDER_DEPLOY_HOOK_DISCOVRY }}
