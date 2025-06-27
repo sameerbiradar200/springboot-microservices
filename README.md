@@ -4,10 +4,10 @@ This monorepo contains multiple Spring Boot services deployed via **Render** usi
 
 ---
 
-## 📦 Microservices Structure
+## 📦 Microservices Render Dashboard Links
 
-- `api-gateway-service` → [https://api-gateway-service-XXXX.onrender.com](#)
-- `discovery-server` → [https://discovery-server-XXXX.onrender.com](#)
+- `api-gateway-service` → [https://dashboard.render.com/web/srv-d1ffe56mcj7s739pgqc0](#)
+- `discovery-server` → [https://dashboard.render.com/web/srv-d1fftmmr433s73fh563g](#)
 
 ---
 
@@ -37,8 +37,4 @@ git commit -m "fix: gateway route issue"
 git push origin main
 ```
 
-###Render Dashboard Links
-
-Render: Gateway Dashboard → [https://dashboard.render.com/web/srv-d1ffe56mcj7s739pgqc0](#)
-Render: Discovery Dashboard → [https://dashboard.render.com/web/srv-d1fftmmr433s73fh563g](#)
 
