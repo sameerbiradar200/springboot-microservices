@@ -22,7 +22,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://discovery-server-5iwb.onrender.com
   instance:
     prefer-ip-address: false
     instance-id: ${spring.application.name}:${server.port}
