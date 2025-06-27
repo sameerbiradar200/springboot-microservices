@@ -22,10 +22,14 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: https://discovery-server-5iwb.onrender.com
+      defaultZone: https://discovery-server-5iwb.onrender.com/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+# Optional but helpful
   instance:
+    hostname: api-gateway-service-myx7.onrender.com
     prefer-ip-address: false
-    instance-id: ${spring.application.name}:${server.port}
 
 logging:
   level:
