@@ -13,7 +13,9 @@ spring:
             - id: user-service
               uri: lb://user-service
               predicates:
-                - Path=/**
+                - Path=/user/**
+              filters:
+                - RewritePath=/user/(?<remaining>.*), /${remaining}
           discovery:
             locator:
               lower-case-service-id: true
