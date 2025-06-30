@@ -8,8 +8,13 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: https://discovery-server-5iwb.onrender.com/eureka/
   instance:
-    hostname: localhost
-    prefer-ip-address: false
-    instance-id: ${spring.application.name}:${server.port}
+    preferIpAddress: false
+    hostname: user.sameerbiradar.xyz
+    nonSecurePortEnabled: false
+    securePortEnabled: true
+    securePort: 443
+    statusPageUrl: https://user.sameerbiradar.xyz/actuator/info
+    healthCheckUrl: https://user.sameerbiradar.xyz/actuator/health
+    homePageUrl: https://user.sameerbiradar.xyz
