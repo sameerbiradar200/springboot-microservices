@@ -16,6 +16,6 @@ public class Test {
     @Bean
     public RouterFunction<ServerResponse> route() {
         return RouterFunctions
-                .route(RequestPredicates.GET("/"), req -> ServerResponse.ok().bodyValue("Hello from API Gateway Service!"));
+                .route(RequestPredicates.GET("/"), req -> ServerResponse.ok().bodyValue("Hello from API Gateway Service! by sameer"));
     }
 }
