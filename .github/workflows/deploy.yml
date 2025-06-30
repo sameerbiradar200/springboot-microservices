@@ -1,32 +1,32 @@
-name: Render Deployment
+# name: Render Deployment
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'api-gateway-service/**'
-      - 'discovery-server/**'
+# on:
+#   push:
+#     branches:
+#       - main
+#     paths:
+#       - 'api-gateway-service/**'
+#       - 'discovery-server/**'
 
-jobs:
-  deploy-gateway:
-    name: Deploy API Gateway to Render
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip gateway')"
-    steps:
-      - name: Trigger Render Deploy for Gateway
-        run: |
-          curl -X POST "$RENDER_DEPLOY_HOOK_GATEWAY"
-        env:
-          RENDER_DEPLOY_HOOK_GATEWAY: ${{ secrets.RENDER_DEPLOY_HOOK_GATEWAY }}
+# jobs:
+#   deploy-gateway:
+#     name: Deploy API Gateway to Render
+#     runs-on: ubuntu-latest
+#     if: "!contains(github.event.head_commit.message, 'skip gateway')"
+#     steps:
+#       - name: Trigger Render Deploy for Gateway
+#         run: |
+#           curl -X POST "$RENDER_DEPLOY_HOOK_GATEWAY"
+#         env:
+#           RENDER_DEPLOY_HOOK_GATEWAY: ${{ secrets.RENDER_DEPLOY_HOOK_GATEWAY }}
 
-  deploy-discovery:
-    name: Deploy Discovery Server to Render
-    runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, 'skip discovery')"
-    steps:
-      - name: Trigger Render Deploy for Discovery
-        run: |
-          curl -X POST "$RENDER_DEPLOY_HOOK_DISCOVRY"
-        env:
-          RENDER_DEPLOY_HOOK_DISCOVRY: ${{ secrets.RENDER_DEPLOY_HOOK_DISCOVRY }}
+#   deploy-discovery:
+#     name: Deploy Discovery Server to Render
+#     runs-on: ubuntu-latest
+#     if: "!contains(github.event.head_commit.message, 'skip discovery')"
+#     steps:
+#       - name: Trigger Render Deploy for Discovery
+#         run: |
+#           curl -X POST "$RENDER_DEPLOY_HOOK_DISCOVRY"
+#         env:
+#           RENDER_DEPLOY_HOOK_DISCOVRY: ${{ secrets.RENDER_DEPLOY_HOOK_DISCOVRY }}
