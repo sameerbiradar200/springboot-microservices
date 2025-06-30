@@ -12,7 +12,7 @@ jobs:
   deploy-gateway:
     name: Deploy API Gateway to Render
     runs-on: ubuntu-latest
-    if: github.event.head_commit.message != 'skip ci'
+    if: "!contains(github.event.head_commit.message, 'skip gateway')"
     steps:
       - name: Trigger Render Deploy for Gateway
         run: |
@@ -23,7 +23,7 @@ jobs:
   deploy-discovery:
     name: Deploy Discovery Server to Render
     runs-on: ubuntu-latest
-    if: github.event.head_commit.message != 'skip ci'
+    if: "!contains(github.event.head_commit.message, 'skip discovery')"
     steps:
       - name: Trigger Render Deploy for Discovery
         run: |
