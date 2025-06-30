@@ -1,0 +1,69 @@
+name: Deploy Eureka & Gateway Services to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy-eureka:
+    name: Deploy Eureka Service
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[eureka]')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and push Eureka image
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/microservices-repo/eureka-server"
+          docker build -t $IMAGE ./discovery-server
+          docker push $IMAGE
+
+      - name: Deploy Eureka to Cloud Run
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/microservices-repo/eureka-server"
+          gcloud run deploy ${{ secrets.GCP_EUREKA_SERVICE }} \
+            --image $IMAGE \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated
+
+  deploy-gateway:
+    name: Deploy API Gateway
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[gateway]')
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Authenticate with GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      - name: Build and push Gateway image
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/microservices-repo/api-gateway"
+          docker build -t $IMAGE ./api-gateway-service
+          docker push $IMAGE
+
+      - name: Deploy Gateway to Cloud Run
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/microservices-repo/api-gateway"
+          gcloud run deploy ${{ secrets.GCP_GATEWAY_SERVICE }} \
+            --image $IMAGE \
+            --platform managed \
+            --region ${{ secrets.GCP_REGION }} \
+            --allow-unauthenticated
