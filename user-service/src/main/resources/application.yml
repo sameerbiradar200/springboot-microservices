@@ -18,3 +18,5 @@ eureka:
     statusPageUrl: https://user.sameerbiradar.xyz/actuator/info
     healthCheckUrl: https://user.sameerbiradar.xyz/actuator/health
     homePageUrl: https://user.sameerbiradar.xyz
+
+
